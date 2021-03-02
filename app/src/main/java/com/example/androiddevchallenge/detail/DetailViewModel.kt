@@ -13,15 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.androiddevchallenge.ui.theme
+package com.example.androiddevchallenge.detail
 
-import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.example.androiddevchallenge.data.Pet
+import com.example.androiddevchallenge.data.PetRepository
 
-val yellow500 = Color(0xFFFFD503)
-val blue600 = Color(0xFF0336FF)
+class DetailViewModel : ViewModel() {
 
-val grey200 = Color(0xFFEEEEEE)
+    private val petRepository = PetRepository()
 
-val green600 = Color(0xFF009966)
+    private val _pet = MutableLiveData<Pet>()
+    val pet: LiveData<Pet>
+        get() = _pet
 
-val brown900 = Color(0xFF342019)
+    fun loadPet(id: Int) {
+        val pet = petRepository.pet(id)
+        _pet.postValue(pet)
+    }
+}
